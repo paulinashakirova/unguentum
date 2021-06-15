@@ -3,11 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-//what do I need this index for?
-// var indexRouter = require('./routes/index');
-//do i need to change it to perfumes?
-// var usersRouter = require('./routes/users');
-var perfumesRouter = require('./routes');
+
+var perfumesRouter = require('./routes/perfumes');
 var app = express();
 
 app.use(logger('dev'));
@@ -16,8 +13,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
+app.use('/', perfumesRouter);
 app.use('/perfumes', perfumesRouter);
+
+// Anything that doesn't match the above, send back index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

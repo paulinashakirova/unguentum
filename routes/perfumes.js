@@ -39,7 +39,7 @@ router.post('/', function (req, res, next) {
 router.delete('/:id', function (req, res, next) {
   db(`DELETE FROM perfumes WHERE id = ${req.params.id};`)
     .then(() => {
-      res.send({ msg: 'Your perfumes were deleted successfully!' });
+      res.send({ msg: 'Your perfume was deleted successfully!' });
     })
     .catch((err) => res.status(500).send(err));
 });

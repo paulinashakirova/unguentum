@@ -1,6 +1,10 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import MainMenu from './components/MainMenu';
 
 export default function App() {
-  return <div className='App'></div>;
+  return (
+    <div className='App'>
+      <MainMenu />
+    </div>
+  );
 }

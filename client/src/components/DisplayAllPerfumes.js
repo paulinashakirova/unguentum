@@ -1,15 +1,19 @@
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-
-import ExtraInfoBox from './ExtraInfoBox';
-
+// import ExtraInfoBox from './ExtraInfoBox';
+import FilterThrough from './FilterThrough';
+import Database from './Database';
 export default function DisplayAllPerfumes() {
   const errorMessage = 'There was a problem, please try again later';
   const [result, setResult] = useState({
+    name: '',
+    brand: '',
     scent: '',
     mood: '',
     season: '',
     time_of_day: '',
-    style: ''
+    style: '',
+    gender: ''
   });
   const [perfumes, setPerfumes] = useState([]);
   let [error, setError] = useState([]);
@@ -26,8 +30,6 @@ export default function DisplayAllPerfumes() {
   const handleSubmit = (e) => {
     e.preventDefault();
     addPerfume();
-    //why spreading both?
-    // setPerfumes((state) => [...state, { ...result }]);
   };
   //
   const getPerfumes = async () => {
@@ -48,7 +50,7 @@ export default function DisplayAllPerfumes() {
     setError('');
     setMessage('');
     try {
-      const response = await fetch('/', {
+      const response = await fetch('/perfumes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -90,116 +92,173 @@ export default function DisplayAllPerfumes() {
     }
   };
   return (
-    <div className='container px-4'>
-      <div>
-        <h1 className='display-1'>Perfume Database</h1>
-      </div>
-
-      <form onSubmit={handleSubmit}>
-        {/* Do I need value or key in allmy inputs? difference?*/}
-
-        <div className='mb-3'>
-          <label className='form-label exampleFormControlInput1'>
-            <p className='lead'>Add new perfume</p>
-          </label>
-          <div className='row g-2'>
-            <div className='col'>
-              <h3>Scent </h3>
-
-              <input
-                className='form-control border-secondary'
-                placeholder='scent'
-                name='scent'
-                type='text'
-                key='scent'
-                value={result.scent}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className='col'>
-              <h3>Mood</h3>
-              <input
-                className='form-control border-secondary'
-                placeholder='mood'
-                name='mood'
-                type='text'
-                key='mood'
-                value={result.mood}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className='col'>
-              <h3>Season</h3>
-              <input
-                className='form-control border-secondary'
-                placeholder='season'
-                name='season'
-                type='text'
-                key='season'
-                value={result.season}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className='col-3'>
-              <h3>Time of Day</h3>
-              <input
-                className='form-control border-secondary'
-                placeholder='time of day'
-                name='time_of_day'
-                type='text'
-                key='time_of_day'
-                value={result.time_of_day}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className='col-3'>
-              <h3>Style</h3>
-              <input
-                className='form-control border-secondary'
-                placeholder='style'
-                name='style'
-                type='text'
-                key='style'
-                value={result.style}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className='container mt-4'>
-              <button className='btn col-12 btn-outline-success shadow p-2 mb-3 bg-body rounded'>Add</button>
-            </div>
-          </div>
+    <Router>
+      <div className='container px-4'>
+        <div>
+          <h1 className='display-1 text-center'>Perfume Database</h1>
         </div>
-      </form>
+        <nav>
+          <ul>
+            <li>
+              <Link to='/filterThrough'>Perfume Database</Link>
+            </li>
+            <li>
+              <Link to='/search'>Search for the best one!</Link>
+            </li>
+          </ul>
+        </nav>
+        <Switch>
+          <Route path='/database'>
+            <Database />
+          </Route>
+          <Route path='/filterThrough'>
+            <FilterThrough />
+          </Route>
+        </Switch>
+        <form method='post' action='/form' autocomplete='off' onSubmit={handleSubmit}>
+          {/* Do I need value or key in allmy inputs? difference?*/}
 
-      <div className='container'>
-        {perfumes.map((perfume) => (
-          <div key={perfume.id}>
-            <div className='row'>
-              <div /*onClick={handleClick}*/ className='col-9 m-2 p-3 border border-secondary rounded'>
-                <div className='row'>
-                  <div className='col'> {perfume.name}</div>
-                  <div className='col'> {perfume.brend}</div>
-                  <div className='col'>{perfume.scent}</div>
-                  <div className='col'> {perfume.mood}</div>
-                  <div className='col'> {perfume.season}</div>
-                  <div className='col'> {perfume.time_of_day}</div>
-                  <div className='col'> {perfume.style}</div>
+          <div className='mb-3'>
+            <label className='form-label exampleFormControlInput1'>
+              <p className='lead'>Add new perfume</p>
+            </label>
+            <div className='row g-2'>
+              <div className='col'>
+                <h3>Name </h3>
+                <input
+                  className='form-control border-secondary text-wrap'
+                  placeholder='name'
+                  name='name'
+                  type='text'
+                  key='name'
+                  value={result.name}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className='col'>
+                <h3>Brand</h3>
+                <input
+                  className='form-control border-secondary text-wrap'
+                  placeholder='brand'
+                  name='brand'
+                  type='text'
+                  key='brand'
+                  value={result.brand}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className='col'>
+                <h3>Scent </h3>
+                <input
+                  className='form-control border-secondary'
+                  placeholder='scent'
+                  name='scent'
+                  type='text'
+                  key='scent'
+                  value={result.scent}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className='col'>
+                <h3>Mood</h3>
+                <input
+                  className='form-control border-secondary'
+                  placeholder='mood'
+                  name='mood'
+                  type='text'
+                  key='mood'
+                  value={result.mood}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className='row g-2'>
+                <div className='col'>
+                  <h3>Season</h3>
+                  <input
+                    className='form-control border-secondary'
+                    placeholder='season'
+                    name='season'
+                    type='text'
+                    key='season'
+                    value={result.season}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className='col'>
+                  <h3>Day/Night</h3>
+                  <input
+                    className='form-control border-secondary'
+                    placeholder='time of day'
+                    name='time_of_day'
+                    type='text'
+                    key='time_of_day'
+                    value={result.time_of_day}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className='col'>
+                  <h3>Style</h3>
+                  <input
+                    className='form-control border-secondary'
+                    placeholder='style'
+                    name='style'
+                    type='text'
+                    key='style'
+                    value={result.style}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className='col'>
+                  <h3>Gender</h3>
+                  <input
+                    className='form-control border-secondary'
+                    placeholder='gender'
+                    name='gender'
+                    type='text'
+                    key='gender'
+                    value={result.gender}
+                    onChange={handleInputChange}
+                  />
                 </div>
               </div>
-              <div className='col-2'>
-                <button
-                  onClick={() => deletePerfume(perfume.id)}
-                  className='btn btn-outline-danger shadow mt-3 mb-3 bg-body rounded'>
-                  Delete
+              <div className='container mt-4'>
+                <button className='btn col-12 btn-outline-success shadow p-2 mb-3 bg-body rounded'>
+                  Add
                 </button>
               </div>
             </div>
           </div>
-        ))}
-        <ExtraInfoBox />
+        </form>
+        <div className='container'>
+          {perfumes.map((perfume) => (
+            <div key={perfume.id}>
+              <div className='row'>
+                <div /*onClick={handleClick}*/ className='col-9 m-2 p-3 border border-secondary rounded'>
+                  <div className='row'>
+                    <div className='col'>{`Name: ${perfume.name}`}</div>
+                    <div className='col'>{`Brand: ${perfume.brand}`}</div>
+                    <div className='col'>{`Scent: ${perfume.scent}`}</div>
+                    <div className='col'>{`Mood: ${perfume.mood}`}</div>
+                    <div className='col'>{`Season: ${perfume.season}`}</div>
+                    <div className='col'>{`Day/Night: ${perfume.time_of_day}`} </div>
+                    <div className='col'>{`Style: ${perfume.style}`}</div>
+                  </div>
+                </div>
+                <div className='col-2'>
+                  <button
+                    onClick={() => deletePerfume(perfume.id)}
+                    className='btn btn-outline-danger shadow mt-3 mb-3 bg-body rounded'>
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* <ExtraInfoBox /> */}
+        {/* <AddNewPerfume /> */}
       </div>
-    </div>
+    </Router>
   );
 }

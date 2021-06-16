@@ -11,6 +11,7 @@ CREATE TABLE `perfumes` (
 	`season` varchar(255) NOT NULL,
 	`gender` varchar(255) NOT NULL,
 	`time_of_day` varchar(255) NOT NULL,
+	`mood` varchar(255) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 

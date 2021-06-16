@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //this was a solution from the internet, but it isnt working
 // app.use('/', require('./router'));
-app.use('/', perfumesRouter);
+
 app.use('/perfumes', perfumesRouter);
 
 // Anything that doesn't match the above, send back index.html

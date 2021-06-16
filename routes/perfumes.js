@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
     .catch((err) => res.status(500).send(err));
 });
 
-// GET one perfume
+// // GET one perfume
 router.get('/:id', function (req, res) {
   db(`SELECT * FROM perfumes WHERE id = ${req.params.id};`)
     .then((results) => {
@@ -26,7 +26,7 @@ router.get('/:id', function (req, res) {
 // INSERT a new perfume into the DB
 router.post('/', function (req, res, next) {
   db(
-    `INSERT INTO perfumes (name, brand, scent, style, season, gender, time_of_day) VALUES ('${req.body.name}', '${req.body.brand}', '${req.body.scent}', '${req.body.style}','${req.body.season}', '${req.body.gender}', '${req.body.tim_of_day}');`
+    `INSERT INTO perfumes (name, brand, scent, mood, style, season, gender, time_of_day) VALUES ('${req.body.name}', '${req.body.brand}', '${req.body.scent}',  '${req.body.mood}','${req.body.style}','${req.body.season}', '${req.body.gender}', '${req.body.time_of_day}');`
   )
     //I tried to write an option when apart from message i would also get the whole list back(for the sake of practicing(with async and with a callback hell - to see for myself)but i am not sure it is correct and if it is - how to see the results in my program)
     // .then(db(`SELECT * FROM perfumes WHERE id = ${req.params.id};`))

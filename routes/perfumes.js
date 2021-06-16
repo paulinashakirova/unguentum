@@ -12,10 +12,13 @@ router.get('/', function (req, res, next) {
 });
 
 // GET one perfume
-router.get('/:id', function (req, res, next) {
+router.get('/:id', function (req, res) {
   db(`SELECT * FROM perfumes WHERE id = ${req.params.id};`)
     .then((results) => {
-      res.send(results.data);
+      if (results.data.length === 0)
+        return res.status(404).send({ msg: 'oups... This perfume is not found, but you have these:' });
+      //why do we use zero?it works without it as well
+      res.send(results.data[0]);
     })
     .catch((err) => res.status(500).send(err));
 });

@@ -12,7 +12,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+//this was a solution from the internet, but it isnt working
+// app.use('/', require('./router'));
 app.use('/', perfumesRouter);
 app.use('/perfumes', perfumesRouter);
 

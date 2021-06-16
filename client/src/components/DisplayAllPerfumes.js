@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import ExtraInfoBox from './ExtraInfoBox';
 
 export default function DisplayAllPerfumes() {
@@ -20,15 +21,13 @@ export default function DisplayAllPerfumes() {
   //
   const handleInputChange = (e) => {
     setResult({ ...result, [e.target.name]: e.target.value });
-
-    // setInput((state) => ({ ...state, [name]: target.value }));
   };
   //
   const handleSubmit = (e) => {
     e.preventDefault();
-    // addStudent();
+    addPerfume();
     //why spreading both?
-    setPerfumes((state) => [...state, { ...result }]);
+    // setPerfumes((state) => [...state, { ...result }]);
   };
   //
   const getPerfumes = async () => {
@@ -49,7 +48,7 @@ export default function DisplayAllPerfumes() {
     setError('');
     setMessage('');
     try {
-      const response = await fetch('/perfumes', {
+      const response = await fetch('/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -59,12 +58,13 @@ export default function DisplayAllPerfumes() {
       });
 
       const json = await response.json();
-      //if I use next 2 lines isnt the catch peace doing the same?
-      // if (!response.ok) {
-      //   throw { message: errorMessage };
-      // }
+      //if I use next 2 lines isnt the catch piece doing the same?
+      if (!response.ok) {
+        throw { message: errorMessage };
+      }
 
       setMessage(json.msg);
+
       getPerfumes();
     } catch (error) {
       setError(error.message);
@@ -96,7 +96,7 @@ export default function DisplayAllPerfumes() {
       </div>
 
       <form onSubmit={handleSubmit}>
-        {/* Do I need value or key? difference?*/}
+        {/* Do I need value or key in allmy inputs? difference?*/}
 
         <div className='mb-3'>
           <label className='form-label exampleFormControlInput1'>

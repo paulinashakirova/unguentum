@@ -2,9 +2,25 @@ var express = require('express');
 var router = express.Router();
 const db = require('../model/helper');
 
+const filterPerfumes = (queryParams) => {
+  let where = '';
+  if ('season' in queryParams) {
+    where += `season = '${queryParams.season}'`;
+  }
+  if (where) {
+    where = `WHERE ` + where;
+  }
+  return where;
+};
 // GET perfume list
+
+//return piece of sql WHERe part if any query param weree passed
+//createWhere(req.query) (if non chosen would return an empty string)
+//selected some attributes
 router.get('/', function (req, res, next) {
-  db('SELECT * FROM perfumes;')
+  let where = filterPerfumes(req.query);
+  console.log(where); //where will be a string (empty or with a sting like WHERE season = "spring")
+  db('SELECT * FROM perfumes ' + where)
     .then((results) => {
       res.send(results.data);
     })
@@ -22,7 +38,23 @@ router.get('/:id', function (req, res) {
     })
     .catch((err) => res.status(500).send(err));
 });
+////////////////////////////////////////////////////////////////
 
+//if true... after WHERE season = 'query param' AND mood = 'req.query.mood'
+router.get('/', function (req, res) {
+  //loop to iterate through key of that object
+  //season, mood, brand
+  //SELECT * from perfumes WHERE season = 'req.query.season' AND mood = 'req.query.mood'
+  db(`SELECT season FROM perfumes WHERE season = ${req.params.season};`)
+    .then((results) => {
+      if (results.data.length === 0)
+        return res.status(404).send({ msg: 'oups... This perfume is not found, but you have these:' });
+
+      res.send(results.data[0]);
+    })
+    .catch((err) => res.status(500).send(err));
+});
+////////////////////////////////////////////////////////////////
 // INSERT a new perfume into the DB
 router.post('/', function (req, res, next) {
   db(

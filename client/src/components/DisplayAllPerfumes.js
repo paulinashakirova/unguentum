@@ -1,8 +1,7 @@
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+// import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 // import ExtraInfoBox from './ExtraInfoBox';
-import FilterThrough from './FilterThrough';
-import Database from './Database';
+
 export default function DisplayAllPerfumes() {
   const errorMessage = 'There was a problem, please try again later';
   const [result, setResult] = useState({
@@ -36,13 +35,14 @@ export default function DisplayAllPerfumes() {
     setError('');
 
     try {
-      const res = await fetch('/perfumes');
-      if (!res.ok) throw { message: errorMessage };
-      const json = await res.json();
+      //what do next line and next next next line do?
+      const response = await fetch('/perfumes');
+      if (!response.ok) throw { message: errorMessage };
+      const json = await response.json();
 
       setPerfumes(json);
     } catch (error) {
-      //I need to figure out how to handle errors without writing manually error message above
+      //msg.... but in line 68 I have msg...
       setError(error.message);
     }
   };
@@ -55,7 +55,7 @@ export default function DisplayAllPerfumes() {
         headers: {
           'Content-Type': 'application/json'
         },
-        //what is better: to set state as an obj in the beginning, or set state as an empty string and put input here in {}
+
         body: JSON.stringify(result)
       });
 
@@ -92,32 +92,15 @@ export default function DisplayAllPerfumes() {
     }
   };
   return (
-    <Router>
+    <div>
       <div className='container px-4'>
         <div>
           <h1 className='display-1 text-center'>Perfume Database</h1>
         </div>
-        <nav>
-          <ul>
-            <li>
-              <Link to='/filterThrough'>Perfume Database</Link>
-            </li>
-            <li>
-              <Link to='/search'>Search for the best one!</Link>
-            </li>
-          </ul>
-        </nav>
-        <Switch>
-          <Route path='/database'>
-            <Database />
-          </Route>
-          <Route path='/filterThrough'>
-            <FilterThrough />
-          </Route>
-        </Switch>
-        <form method='post' action='/form' autocomplete='off' onSubmit={handleSubmit}>
-          {/* Do I need value or key in allmy inputs? difference?*/}
-
+      </div>
+      <form method='post' action='/form' autocomplete='off' onSubmit={handleSubmit}>
+        {/* Do I need value or key in allmy inputs? difference?*/}
+        <div className='container'>
           <div className='mb-3'>
             <label className='form-label exampleFormControlInput1'>
               <p className='lead'>Add new perfume</p>
@@ -228,37 +211,37 @@ export default function DisplayAllPerfumes() {
               </div>
             </div>
           </div>
-        </form>
-        <div className='container'>
-          {perfumes.map((perfume) => (
-            <div key={perfume.id}>
-              <div className='row'>
-                <div /*onClick={handleClick}*/ className='col-9 m-2 p-3 border border-secondary rounded'>
-                  <div className='row'>
-                    <div className='col'>{`Name: ${perfume.name}`}</div>
-                    <div className='col'>{`Brand: ${perfume.brand}`}</div>
-                    <div className='col'>{`Scent: ${perfume.scent}`}</div>
-                    <div className='col'>{`Mood: ${perfume.mood}`}</div>
-                    <div className='col'>{`Season: ${perfume.season}`}</div>
-                    <div className='col'>{`Day/Night: ${perfume.time_of_day}`} </div>
-                    <div className='col'>{`Style: ${perfume.style}`}</div>
-                  </div>
-                </div>
-                <div className='col-2'>
-                  <button
-                    onClick={() => deletePerfume(perfume.id)}
-                    className='btn btn-outline-danger shadow mt-3 mb-3 bg-body rounded'>
-                    Delete
-                  </button>
+        </div>
+      </form>
+      <div className='container'>
+        {perfumes.map((perfume) => (
+          <div key={perfume.id}>
+            <div className='row'>
+              <div /*onClick={handleClick}*/ className='col-9 m-2 p-3 border border-secondary rounded'>
+                <div className='row'>
+                  <div className='col'>{`Name: ${perfume.name}`}</div>
+                  <div className='col'>{`Brand: ${perfume.brand}`}</div>
+                  <div className='col'>{`Scent: ${perfume.scent}`}</div>
+                  <div className='col'>{`Mood: ${perfume.mood}`}</div>
+                  <div className='col'>{`Season: ${perfume.season}`}</div>
+                  <div className='col'>{`Day/Night: ${perfume.time_of_day}`} </div>
+                  <div className='col'>{`Style: ${perfume.style}`}</div>
                 </div>
               </div>
+              <div className='col-2'>
+                <button
+                  onClick={() => deletePerfume(perfume.id)}
+                  className='btn btn-outline-danger shadow mt-3 mb-3 bg-body rounded'>
+                  Delete
+                </button>
+              </div>
             </div>
-          ))}
-        </div>
-
-        {/* <ExtraInfoBox /> */}
-        {/* <AddNewPerfume /> */}
+          </div>
+        ))}
       </div>
-    </Router>
+
+      {/* <ExtraInfoBox /> */}
+      {/* <AddNewPerfume /> */}
+    </div>
   );
 }

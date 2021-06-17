@@ -7,11 +7,37 @@ const filterPerfumes = (queryParams) => {
   if ('season' in queryParams) {
     where += `season = '${queryParams.season}'`;
   }
+  if ('mood' in queryParams) {
+    if (where) {
+      where += ` AND `;
+    }
+    where += `mood = '${queryParams.mood}'`;
+  }
+  if ('scent' in queryParams) {
+    if (where) {
+      where += ` AND `;
+    }
+    where += `scent = '${queryParams.scent}'`;
+  }
+  if ('brand' in queryParams) {
+    if (where) {
+      where += ` AND `;
+    }
+    where += `brand = '${queryParams.brand}'`;
+  }
   if (where) {
     where = `WHERE ` + where;
   }
   return where;
 };
+// && 'mood' in queryParams
+//if there are two where...in between insert string `AND`
+//maybe create another if (before the 'where' one... that would check if there is more than one filter chosen)
+//but then i also need to stop before the last one...
+//how would i know which one is the last one? if I cannot predict the amount of filters
+//do I create chain statement(dont know how yet)
+// if ('scent' in queryParams) {
+// }
 // GET perfume list
 
 //return piece of sql WHERe part if any query param weree passed
@@ -19,7 +45,7 @@ const filterPerfumes = (queryParams) => {
 //selected some attributes
 router.get('/', function (req, res, next) {
   let where = filterPerfumes(req.query);
-  console.log(where); //where will be a string (empty or with a sting like WHERE season = "spring")
+  // console.log(where); //where will be a string (empty or with a sting like WHERE season = "spring")
   db('SELECT * FROM perfumes ' + where)
     .then((results) => {
       res.send(results.data);

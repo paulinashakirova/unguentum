@@ -44,6 +44,7 @@ export default function FilterThrough() {
                   // value={result.scent}
                   // onChange={handleInputChange}
                 >
+                  <option value='empty'>choose</option>
                   <option value='woody'>woody</option>
                   <option value='spicy'>spicy</option>
                   <option value='fruity'>fruity</option>
@@ -63,6 +64,7 @@ export default function FilterThrough() {
                   // value={result.mood}
                   // onChange={handleInputChange}
                 >
+                  <option value='empty'>choose</option>
                   <option value='confident'>confident</option>
                   <option value='sensual'>sensual</option>
                   <option value='romantic'>romantic</option>
@@ -84,6 +86,7 @@ export default function FilterThrough() {
                   // value={result.season}
                   // onChange={handleInputChange}
                 >
+                  <option value='empty'>choose</option>
                   <option value='winter'>winter</option>
                   <option value='spring'>spring</option>
                   <option value='summer'>summer</option>
@@ -102,6 +105,7 @@ export default function FilterThrough() {
                     // value={result.time_of_day}
                     // onChange={handleInputChange}
                   >
+                    <option value='empty'>choose</option>
                     <option value='day'>day</option>
                     <option value='night'>night</option>
                   </select>
@@ -117,6 +121,7 @@ export default function FilterThrough() {
                     // value={result.style}
                     // onChange={handleInputChange}
                   >
+                    <option value='empty'>choose</option>
                     <option value='office'>office</option>
                     <option value='chic'>chic</option>
                     <option value='casual'>casual</option>
@@ -138,6 +143,7 @@ export default function FilterThrough() {
                     // value={result.gender}
                     // onChange={handleInputChange}
                   >
+                    <option value='empty'>choose</option>
                     <option value='female'>female</option>
                     <option value='unisex'>unisex</option>
                   </select>
@@ -145,9 +151,10 @@ export default function FilterThrough() {
               </div>
               <div className='container mt-4'>
                 <button className='btn col-12 btn-outline-success shadow p-2 mb-3 bg-body rounded'>
-                  Add
+                  Search
                 </button>
               </div>
+              <div className='container'></div>
             </div>
           </div>
         </div>

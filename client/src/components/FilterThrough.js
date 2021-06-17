@@ -5,11 +5,77 @@ export default function FilterThrough() {
   let [error, setError] = useState([]);
   let [message, setMessage] = useState('');
   const [perfumes, setPerfumes] = useState([]);
+  console.log(perfumes);
   const handleSubmit = (e) => {
     e.preventDefault();
-    getPerfumes();
+
+    // take params, create URL based on parmas
+    // fetch using this url - getPerfumes1()
+    // setParfumes(retrieved from fetch)
   };
-  //
+  const handleInputChange = ({ target }) => {
+    const { name, value } = target;
+    console.log('target = ' + target);
+    // 2. param should be saved somewhere
+    /*setPerfumes((state) => ({
+      ...state,
+      [name]: value
+    }));*/
+  };
+
+  /*
+  1. user selects Scent
+  2. scent=woody is saved somewhere 
+  3. user clicks Search
+  4. App creates URL with query parameters ?scent=woody&mood=...
+   and sends fetch request for perfumes
+   
+  5. setPerfumes(returned perfumes)
+  */
+  const addPerfume = async () => {
+    setError('');
+    setMessage('');
+    try {
+      const response = await fetch('/perfumes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify()
+      });
+
+      const json = await response.json();
+      //if I use next 2 lines isnt the catch piece doing the same?
+      if (!response.ok) {
+        throw { message: errorMessage };
+      }
+
+      setMessage(json.msg);
+
+      getPerfumes();
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+  const getPerfumes1 = async () => {
+    setError('');
+    try {
+      let url = '/perfumes';
+      /*for (const apple in params) {
+        url += apple + '=' + parmas[apple] + '&';
+      }*/
+
+      const response = await fetch(url);
+      if (!response.ok) throw { message: errorMessage };
+      const json = await response.json();
+
+      setPerfumes(json);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   const getPerfumes = async () => {
     setError('');
     try {
@@ -41,9 +107,8 @@ export default function FilterThrough() {
                   name='scent'
                   type='text'
                   key='scent'
-                  // value={result.scent}
-                  // onChange={handleInputChange}
-                >
+                  value={perfumes.scent}
+                  onChange={handleInputChange}>
                   <option value='empty'>choose</option>
                   <option value='woody'>woody</option>
                   <option value='spicy'>spicy</option>
@@ -61,9 +126,8 @@ export default function FilterThrough() {
                   name='mood'
                   type='text'
                   key='mood'
-                  // value={result.mood}
-                  // onChange={handleInputChange}
-                >
+                  value={perfumes.mood}
+                  onChange={handleInputChange}>
                   <option value='empty'>choose</option>
                   <option value='confident'>confident</option>
                   <option value='sensual'>sensual</option>
@@ -83,9 +147,8 @@ export default function FilterThrough() {
                   name='season'
                   type='text'
                   key='season'
-                  // value={result.season}
-                  // onChange={handleInputChange}
-                >
+                  value={perfumes.season}
+                  onChange={handleInputChange}>
                   <option value='empty'>choose</option>
                   <option value='winter'>winter</option>
                   <option value='spring'>spring</option>
@@ -102,9 +165,8 @@ export default function FilterThrough() {
                     name='time_of_day'
                     type='text'
                     key='time_of_day'
-                    // value={result.time_of_day}
-                    // onChange={handleInputChange}
-                  >
+                    value={perfumes.time_of_day}
+                    onChange={handleInputChange}>
                     <option value='empty'>choose</option>
                     <option value='day'>day</option>
                     <option value='night'>night</option>
@@ -118,9 +180,8 @@ export default function FilterThrough() {
                     name='style'
                     type='text'
                     key='style'
-                    // value={result.style}
-                    // onChange={handleInputChange}
-                  >
+                    value={perfumes.style}
+                    onChange={handleInputChange}>
                     <option value='empty'>choose</option>
                     <option value='office'>office</option>
                     <option value='chic'>chic</option>
@@ -140,9 +201,8 @@ export default function FilterThrough() {
                     name='gender'
                     type='text'
                     key='gender'
-                    // value={result.gender}
-                    // onChange={handleInputChange}
-                  >
+                    value={perfumes.gender}
+                    onChange={handleInputChange}>
                     <option value='empty'>choose</option>
                     <option value='female'>female</option>
                     <option value='unisex'>unisex</option>
@@ -154,7 +214,27 @@ export default function FilterThrough() {
                   Search
                 </button>
               </div>
-              <div className='container'></div>
+              <div className='container'>
+                {perfumes.map((perfume) => (
+                  <div key={perfume.id}>
+                    <div className='row'>
+                      <div
+                        /*onClick={handleClick}*/ className='col-9 m-2 p-3 border border-secondary rounded'>
+                        <div className='row'>
+                          <div className='col'>{`Name: ${perfume.name}`}</div>
+                          <div className='col'>{`Brand: ${perfume.brand}`}</div>
+                          <div className='col'>{`Scent: ${perfume.scent}`}</div>
+                          <div className='col'>{`Mood: ${perfume.mood}`}</div>
+                          <div className='col'>{`Season: ${perfume.season}`}</div>
+                          <div className='col'>{`Day/Night: ${perfume.time_of_day}`} </div>
+                          <div className='col'>{`Style: ${perfume.style}`}</div>
+                        </div>
+                      </div>
+                      <div className='col-2'></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

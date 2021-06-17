@@ -7,27 +7,46 @@ const filterPerfumes = (queryParams) => {
   if ('season' in queryParams) {
     where += `season = '${queryParams.season}'`;
   }
+  console.log(where);
   if ('mood' in queryParams) {
     if (where) {
       where += ` AND `;
     }
     where += `mood = '${queryParams.mood}'`;
   }
+  console.log(where);
+  if ('time_of_day' in queryParams) {
+    if (where) {
+      where += ` AND `;
+    }
+    where += `time_of_day = '${queryParams.time_of_day}'`;
+  }
+  console.log(where);
   if ('scent' in queryParams) {
     if (where) {
       where += ` AND `;
     }
     where += `scent = '${queryParams.scent}'`;
   }
-  if ('brand' in queryParams) {
+  console.log(where);
+  if ('style' in queryParams) {
     if (where) {
       where += ` AND `;
     }
-    where += `brand = '${queryParams.brand}'`;
+    where += `style = '${queryParams.style}'`;
   }
+  console.log(where);
+  if ('gender' in queryParams) {
+    if (where) {
+      where += ` AND `;
+    }
+    where += `gender = '${queryParams.gender}'`;
+  }
+  console.log(where);
   if (where) {
     where = `WHERE ` + where;
   }
+  console.log(where);
   return where;
 };
 // && 'mood' in queryParams
@@ -45,7 +64,8 @@ const filterPerfumes = (queryParams) => {
 //selected some attributes
 router.get('/', function (req, res, next) {
   let where = filterPerfumes(req.query);
-  // console.log(where); //where will be a string (empty or with a sting like WHERE season = "spring")
+  // console.log(where);
+  //where will be a string (empty or with a sting like WHERE season = "spring")
   db('SELECT * FROM perfumes ' + where)
     .then((results) => {
       res.send(results.data);

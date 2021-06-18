@@ -1,3 +1,3 @@
-const list = ["office", "chic", "casual", "bohemian", "GERMINAL"];
+const list = ['spicy', 'fruity', 'floral', 'citrus', 'powdery'];
 
 export default list;

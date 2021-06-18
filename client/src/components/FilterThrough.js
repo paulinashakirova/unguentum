@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 
 export default function FilterThrough() {
-  const errorMessage = 'There was a problem, please try again later';
+  const errorMessage = "There was a problem, please try again later";
   let [error, setError] = useState([]);
-  let [message, setMessage] = useState('');
+  let [message, setMessage] = useState("");
   const [result, setResult] = useState({});
   const [perfumes, setPerfumes] = useState([]);
   //i know for sure that result is working.
   // console.log(result);
   const handleInputChange = (e) => {
     setResult({ ...result, [e.target.name]: e.target.value });
-    console.log(result);
   };
+
+  useEffect(() => {
+    console.log(result);
+  }, [result]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     getPerfumes();
@@ -74,18 +78,20 @@ export default function FilterThrough() {
   // };
   //!!!apart from url being broken it also saves all entries in my DB which i dont want
   const getPerfumes = async () => {
-    setError('');
+    setError("");
     try {
-      let url = '/perfumes';
+      let url = "/perfumes";
       for (const param in result) {
-        url += '?' + param + '=' + param[result] + '&';
+        url += "?" + param + "=" + result[param] + "&";
       }
+
+      console.log(url);
 
       const response = await fetch(url);
       if (!response.ok) throw { message: errorMessage };
       const json = await response.json();
       console.log(json);
-      // setPerfumes(json);
+      setPerfumes(json);
     } catch (error) {
       setError(error.message);
     }
@@ -93,146 +99,155 @@ export default function FilterThrough() {
 
   return (
     <div>
-      <form method='post' action='/form' autocomplete='off' onSubmit={handleSubmit}>
+      <form autocomplete="off" onSubmit={handleSubmit}>
         {/* Do I need value or key in allmy inputs? difference?*/}
-        <div className='container'>
-          <div className='mb-3'>
-            <label className='form-label exampleFormControlInput1'>
-              <p className='lead'>Find what you want</p>
+        <div className="container">
+          <div className="mb-3">
+            <label className="form-label exampleFormControlInput1">
+              <p className="lead">Find what you want</p>
             </label>
-            <div className='row g-2'>
-              <div className='col'>
+            <div className="row g-2">
+              <div className="col">
                 <h3>Scent</h3>
                 <select
-                  className='form-control border-secondary'
-                  placeholder='scent'
-                  name='scent'
-                  type='text'
-                  key='scent'
+                  className="form-control border-secondary"
+                  placeholder="scent"
+                  name="scent"
+                  type="text"
+                  key="scent"
                   value={perfumes.scent}
-                  onChange={handleInputChange}>
-                  <option value='empty'>choose</option>
-                  <option value='woody'>woody</option>
-                  <option value='spicy'>spicy</option>
-                  <option value='fruity'>fruity</option>
-                  <option value='floral'>floral</option>
-                  <option value='citrus'>citrus</option>
-                  <option value='powdery'>powdery</option>
+                  onChange={handleInputChange}
+                >
+                  <option value="empty">choose</option>
+                  <option value="woody">woody</option>
+                  <option value="spicy">spicy</option>
+                  <option value="fruity">fruity</option>
+                  <option value="floral">floral</option>
+                  <option value="citrus">citrus</option>
+                  <option value="powdery">powdery</option>
                 </select>
               </div>
-              <div className='col'>
+              <div className="col">
                 <h3>Mood</h3>
                 <select
-                  className='form-control border-secondary'
-                  placeholder='mood'
-                  name='mood'
-                  type='text'
-                  key='mood'
+                  className="form-control border-secondary"
+                  placeholder="mood"
+                  name="mood"
+                  type="text"
+                  key="mood"
                   value={perfumes.mood}
-                  onChange={handleInputChange}>
-                  <option value='empty'>choose</option>
-                  <option value='confident'>confident</option>
-                  <option value='sensual'>sensual</option>
-                  <option value='romantic'>romantic</option>
-                  <option value='luxurius'>luxurius</option>
-                  <option value='flirtatious'>flirtatious</option>
-                  <option value='happy'>happy</option>
-                  <option value='intimate'>intimate</option>
-                  <option value='powdery'>powdery</option>
+                  onChange={handleInputChange}
+                >
+                  <option value="empty">choose</option>
+                  <option value="confident">confident</option>
+                  <option value="sensual">sensual</option>
+                  <option value="romantic">romantic</option>
+                  <option value="luxurius">luxurius</option>
+                  <option value="flirtatious">flirtatious</option>
+                  <option value="happy">happy</option>
+                  <option value="intimate">intimate</option>
+                  <option value="powdery">powdery</option>
                 </select>
               </div>
-              <div className='col'>
+              <div className="col">
                 <h3>Season</h3>
                 <select
-                  className='form-control border-secondary'
-                  placeholder='season'
-                  name='season'
-                  type='text'
-                  key='season'
+                  className="form-control border-secondary"
+                  placeholder="season"
+                  name="season"
+                  type="text"
+                  key="season"
                   value={perfumes.season}
-                  onChange={handleInputChange}>
-                  <option value='empty'>choose</option>
-                  <option value='winter'>winter</option>
-                  <option value='spring'>spring</option>
-                  <option value='summer'>summer</option>
-                  <option value='fall'>fall</option>
+                  onChange={handleInputChange}
+                >
+                  <option value="empty">choose</option>
+                  <option value="winter">winter</option>
+                  <option value="spring">spring</option>
+                  <option value="summer">summer</option>
+                  <option value="fall">fall</option>
                 </select>
               </div>
-              <div className='row g-2'>
-                <div className='col'>
+              <div className="row g-2">
+                <div className="col">
                   <h3>Day/Night</h3>
                   <select
-                    className='form-control border-secondary'
-                    placeholder='time of day'
-                    name='time_of_day'
-                    type='text'
-                    key='time_of_day'
+                    className="form-control border-secondary"
+                    placeholder="time of day"
+                    name="time_of_day"
+                    type="text"
+                    key="time_of_day"
                     value={perfumes.time_of_day}
-                    onChange={handleInputChange}>
-                    <option value='empty'>choose</option>
-                    <option value='day'>day</option>
-                    <option value='night'>night</option>
+                    onChange={handleInputChange}
+                  >
+                    <option value="empty">choose</option>
+                    <option value="day">day</option>
+                    <option value="night">night</option>
                   </select>
                 </div>
-                <div className='col'>
+                <div className="col">
                   <h3>Style</h3>
                   <select
-                    className='form-control border-secondary'
-                    placeholder='style'
-                    name='style'
-                    type='text'
-                    key='style'
+                    className="form-control border-secondary"
+                    placeholder="style"
+                    name="style"
+                    type="text"
+                    key="style"
                     value={perfumes.style}
-                    onChange={handleInputChange}>
-                    <option value='empty'>choose</option>
-                    <option value='office'>office</option>
-                    <option value='chic'>chic</option>
-                    <option value='casual'>casual</option>
-                    <option value='bohemian'>bohemian</option>
-                    <option value='elegant'>elegant</option>
-                    <option value='tomboy'>tomboy</option>
-                    <option value='punk'>punk</option>
-                    <option value='sporty'>sporty</option>
+                    onChange={handleInputChange}
+                  >
+                    <option value="empty">choose</option>
+                    <option value="office">office</option>
+                    <option value="chic">chic</option>
+                    <option value="casual">casual</option>
+                    <option value="bohemian">bohemian</option>
+                    <option value="elegant">elegant</option>
+                    <option value="tomboy">tomboy</option>
+                    <option value="punk">punk</option>
+                    <option value="sporty">sporty</option>
                   </select>
                 </div>
-                <div className='col'>
+                <div className="col">
                   <h3>Gender</h3>
                   <select
-                    className='form-control border-secondary'
-                    placeholder='gender'
-                    name='gender'
-                    type='text'
-                    key='gender'
+                    className="form-control border-secondary"
+                    placeholder="gender"
+                    name="gender"
+                    type="text"
+                    key="gender"
                     value={perfumes.gender}
-                    onChange={handleInputChange}>
-                    <option value='empty'>choose</option>
-                    <option value='female'>female</option>
-                    <option value='unisex'>unisex</option>
+                    onChange={handleInputChange}
+                  >
+                    <option value="empty">choose</option>
+                    <option value="female">female</option>
+                    <option value="unisex">unisex</option>
                   </select>
                 </div>
               </div>
-              <div className='container mt-4'>
-                <button className='btn col-12 btn-outline-success shadow p-2 mb-3 bg-body rounded'>
+              <div className="container mt-4">
+                <button className="btn col-12 btn-outline-success shadow p-2 mb-3 bg-body rounded">
                   Search
                 </button>
               </div>
-              <div className='container'>
+              <div className="container">
                 {perfumes.map((perfume) => (
                   <div key={perfume.id}>
-                    <div className='row'>
+                    <div className="row">
                       <div
-                        /*onClick={handleClick}*/ className='col-9 m-2 p-3 border border-secondary rounded'>
-                        <div className='row'>
-                          <div className='col'>{`Name: ${perfume.name}`}</div>
-                          <div className='col'>{`Brand: ${perfume.brand}`}</div>
-                          <div className='col'>{`Scent: ${perfume.scent}`}</div>
-                          <div className='col'>{`Mood: ${perfume.mood}`}</div>
-                          <div className='col'>{`Season: ${perfume.season}`}</div>
-                          <div className='col'>{`Day/Night: ${perfume.time_of_day}`} </div>
-                          <div className='col'>{`Style: ${perfume.style}`}</div>
+                        /*onClick={handleClick}*/ className="col-9 m-2 p-3 border border-secondary rounded"
+                      >
+                        <div className="row">
+                          <div className="col">{`Name: ${perfume.name}`}</div>
+                          <div className="col">{`Brand: ${perfume.brand}`}</div>
+                          <div className="col">{`Scent: ${perfume.scent}`}</div>
+                          <div className="col">{`Mood: ${perfume.mood}`}</div>
+                          <div className="col">{`Season: ${perfume.season}`}</div>
+                          <div className="col">
+                            {`Day/Night: ${perfume.time_of_day}`}{" "}
+                          </div>
+                          <div className="col">{`Style: ${perfume.style}`}</div>
                         </div>
                       </div>
-                      <div className='col-2'></div>
+                      <div className="col-2"></div>
                     </div>
                   </div>
                 ))}

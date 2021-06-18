@@ -19,13 +19,13 @@ export default function MainMenu() {
         {/* <input type='text' value={message} onChange={handleChange} /> */}
       </div>
       <nav>
-        <div className='ms-4 mb-2 '>
-          <NavLink to='/database' className=' fs-3 border-0 text-success text-decoration-none'>
+        <div className='ms-4 mb-2 text-center'>
+          <NavLink to='/database' className=' fs-3 border-0 text-success'>
             Perfume Database
           </NavLink>
         </div>
-        <div className='ms-4 mb-3'>
-          <NavLink to='/filterthrough' className=' fs-3 border-0 text-success text-decoration-none'>
+        <div className='ms-4 mb-3 text-center'>
+          <NavLink to='/filterthrough' className=' fs-3 border-0 text-success '>
             Search for the best one!
           </NavLink>
         </div>

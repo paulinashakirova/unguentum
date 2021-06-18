@@ -10,6 +10,7 @@ export default function FilterThrough() {
   // console.log(result);
   const handleInputChange = (e) => {
     setResult({ ...result, [e.target.name]: e.target.value });
+    console.log(result);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,7 +72,7 @@ export default function FilterThrough() {
   //     setError(error.message);
   //   }
   // };
-
+  //!!!apart from url being broken it also saves all entries in my DB which i dont want
   const getPerfumes = async () => {
     setError('');
     try {
@@ -83,8 +84,8 @@ export default function FilterThrough() {
       const response = await fetch(url);
       if (!response.ok) throw { message: errorMessage };
       const json = await response.json();
-
-      setPerfumes(json);
+      console.log(json);
+      // setPerfumes(json);
     } catch (error) {
       setError(error.message);
     }

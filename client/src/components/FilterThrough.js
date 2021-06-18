@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import scents from "../utils/scents";
 
 export default function FilterThrough() {
   const errorMessage = "There was a problem, please try again later";
@@ -138,15 +139,13 @@ export default function FilterThrough() {
                   value={perfumes.mood}
                   onChange={handleInputChange}
                 >
-                  <option value="empty">choose</option>
-                  <option value="confident">confident</option>
-                  <option value="sensual">sensual</option>
-                  <option value="romantic">romantic</option>
-                  <option value="luxurius">luxurius</option>
-                  <option value="flirtatious">flirtatious</option>
-                  <option value="happy">happy</option>
-                  <option value="intimate">intimate</option>
-                  <option value="powdery">powdery</option>
+                  <option value="">choose</option>
+
+                  {scents.map((scent) => (
+                    <option key={scent} value={scent}>
+                      {scent}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="col">

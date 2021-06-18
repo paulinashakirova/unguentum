@@ -4,24 +4,37 @@ export default function FilterThrough() {
   const errorMessage = 'There was a problem, please try again later';
   let [error, setError] = useState([]);
   let [message, setMessage] = useState('');
+  const [result, setResult] = useState({});
   const [perfumes, setPerfumes] = useState([]);
-  console.log(perfumes);
+  //i know for sure that result is working.
+  // console.log(result);
+  const handleInputChange = (e) => {
+    setResult({ ...result, [e.target.name]: e.target.value });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    getPerfumes();
+    // console.log(result);
+    // let myUrlWithParams = new URL('localhost:5000/perfumes/');
+    // myUrlWithParams.searchParams.append('scent', 'woody');
+    // console.log(myUrlWithParams.href);
+    ////////////////////////////////
+    //how do i grab params?
+    ///////////////////////////////
+    //result <= contains all chosen "key:value" pairs from handleInputChange
     // take params, create URL based on parmas
     // fetch using this url - getPerfumes1()
     // setParfumes(retrieved from fetch)
   };
-  const handleInputChange = ({ target }) => {
-    const { name, value } = target;
-    console.log('target = ' + target);
-    // 2. param should be saved somewhere
-    /*setPerfumes((state) => ({
+
+  // const handleInputChange = ({ target }) => {
+  //   const { name, value } = target;
+  //   console.log('target = ' + target);
+  // 2. param should be saved somewhere
+  /*setPerfumes((state) => ({
       ...state,
       [name]: value
     }));*/
-  };
 
   /*
   1. user selects Scent
@@ -32,54 +45,42 @@ export default function FilterThrough() {
    
   5. setPerfumes(returned perfumes)
   */
-  const addPerfume = async () => {
-    setError('');
-    setMessage('');
-    try {
-      const response = await fetch('/perfumes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
 
-        body: JSON.stringify()
-      });
+  // const getPerfumes = async () => {
+  //   setError('');
+  //   //why next three lines are not working?
+  //   //new URL works only with fool url... starting with https:
+  //   // How do I apply it to my localhost:5000?
+  //   // let myUrlWithParams = new URL('localhost:5000/perfumes/');
+  //   // myUrlWithParams.searchParams.append('scent', 'woody');
+  //   // console.log(myUrlWithParams.href);
+  //   //
+  //   //just a solution from stackoverflow that i dont know how to implement
+  //   // function encodeQueryData(result) {
+  //   //   const ret = [];
+  //   //   for (let d in result) ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(result[d]));
+  //   //   return ret.join('&');
+  //   // }
+  //   try {
+  //     const response = await fetch('myUrlWithParams');
+  //     if (!response.ok) throw { message: errorMessage };
+  //     const json = await response.json();
 
-      const json = await response.json();
-      //if I use next 2 lines isnt the catch piece doing the same?
-      if (!response.ok) {
-        throw { message: errorMessage };
-      }
-
-      setMessage(json.msg);
-
-      getPerfumes();
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-  const getPerfumes1 = async () => {
-    setError('');
-    try {
-      let url = '/perfumes';
-      /*for (const apple in params) {
-        url += apple + '=' + parmas[apple] + '&';
-      }*/
-
-      const response = await fetch(url);
-      if (!response.ok) throw { message: errorMessage };
-      const json = await response.json();
-
-      setPerfumes(json);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+  //     setPerfumes(json);
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  // };
 
   const getPerfumes = async () => {
     setError('');
     try {
-      const response = await fetch('/perfumes');
+      let url = '/perfumes';
+      for (const param in result) {
+        url += '?' + param + '=' + param[result] + '&';
+      }
+
+      const response = await fetch(url);
       if (!response.ok) throw { message: errorMessage };
       const json = await response.json();
 

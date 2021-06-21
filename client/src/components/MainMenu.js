@@ -20,14 +20,14 @@ export default function MainMenu() {
       </div>
       <nav>
         <div className='container'>
-          <div className='row justify-content-around'>
-            <div className='ms-4 mb-2 col'>
-              <NavLink to='/database' className=' fs-3 border-0 text-success'>
+          <div className='row justify-content-between'>
+            <div className='ms-4 mb-2 col-3'>
+              <NavLink to='/database' className=' fs-3  btn btn-outline-success'>
                 Perfume Database
               </NavLink>
             </div>
-            <div className=' mb-2 text-center col'>
-              <NavLink to='/' className=' fs-3 border-0 text-success '>
+            <div className=' mb-2 text-center col-4'>
+              <NavLink to='/' className=' fs-3  btn btn-outline-success'>
                 Search for the best one!
               </NavLink>
             </div>

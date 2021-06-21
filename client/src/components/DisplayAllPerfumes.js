@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 // import ExtraInfoBox from './ExtraInfoBox';
 import scents from '../utils/scents';
 import mood from '../utils/mood';
-import seasons from '../utils/seasons';
-import timeOfDay from '../utils/timeOfDay';
+import season from '../utils/season';
+import time_of_day from '../utils/time_of_day';
 import styles from '../utils/styles';
 import genders from '../utils/genders';
 export default function DisplayAllPerfumes() {
@@ -181,15 +181,15 @@ export default function DisplayAllPerfumes() {
 
                   <select
                     className='form-control border-secondary'
-                    placeholder='seasons'
-                    name='seasons'
+                    placeholder='season'
+                    name='season'
                     type='text'
-                    key='seasons'
-                    value={perfumes.seasons}
+                    key='season'
+                    value={perfumes.season}
                     onChange={handleInputChange}>
                     <option value=''>choose</option>
 
-                    {seasons.map((season) => (
+                    {season.map((season) => (
                       <option key={season} value={season}>
                         {season}
                       </option>
@@ -201,15 +201,15 @@ export default function DisplayAllPerfumes() {
 
                   <select
                     className='form-control border-secondary'
-                    placeholder='timeOfDay'
-                    name='timeOfDay'
+                    placeholder='time_of_day'
+                    name='time_of_day'
                     type='text'
-                    key='timeOfDay'
-                    value={perfumes.timeOfDay}
+                    key='time_of_day'
+                    value={perfumes.time_of_day}
                     onChange={handleInputChange}>
                     <option value=''>choose</option>
 
-                    {timeOfDay.map((time) => (
+                    {time_of_day.map((time) => (
                       <option key={time} value={time}>
                         {time}
                       </option>

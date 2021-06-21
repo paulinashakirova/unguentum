@@ -4,6 +4,7 @@ const db = require('../model/helper');
 
 const filterPerfumes = (queryParams) => {
   let where = '';
+  //check seasonS front end
   if ('season' in queryParams) {
     where += `season = '${queryParams.season}'`;
   }

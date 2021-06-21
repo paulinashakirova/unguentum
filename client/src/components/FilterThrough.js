@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import scents from '../utils/scents';
 import mood from '../utils/mood';
-import seasons from '../utils/seasons';
-import timeOfDay from '../utils/timeOfDay';
+import season from '../utils/season';
+import time_of_day from '../utils/time_of_day';
 import styles from '../utils/styles';
 import genders from '../utils/genders';
 export default function FilterThrough() {
@@ -11,7 +11,10 @@ export default function FilterThrough() {
   let [message, setMessage] = useState('');
   const [result, setResult] = useState({});
   const [perfumes, setPerfumes] = useState([]);
-
+  //
+  //When I unclick a filter, all results dissapear and in my GET request i see this
+  //GET /perfumes?scent=fruity&mood=romantic&season=&
+  //although the request is still 200 OK
   const handleInputChange = (e) => {
     setResult({ ...result, [e.target.name]: e.target.value });
   };
@@ -94,15 +97,15 @@ export default function FilterThrough() {
                 {/* //need to do */}
                 <select
                   className='form-control border-secondary'
-                  placeholder='seasons'
-                  name='seasons'
+                  placeholder='season'
+                  name='season'
                   type='text'
-                  key='seasons'
-                  value={perfumes.seasons}
+                  key='season'
+                  value={perfumes.season}
                   onChange={handleInputChange}>
                   <option value=''>choose</option>
 
-                  {seasons.map((season) => (
+                  {season.map((season) => (
                     <option key={season} value={season}>
                       {season}
                     </option>
@@ -114,15 +117,15 @@ export default function FilterThrough() {
                   <h3>Day/Night</h3>
                   <select
                     className='form-control border-secondary'
-                    placeholder='timeOfDay'
-                    name='timeOfDay'
+                    placeholder='time_of_day'
+                    name='time_of_day'
                     type='text'
-                    key='timeOfDay'
-                    value={perfumes.timeOfDay}
+                    key='time_of_day'
+                    value={perfumes.time_of_day}
                     onChange={handleInputChange}>
                     <option value=''>choose</option>
 
-                    {timeOfDay.map((time) => (
+                    {time_of_day.map((time) => (
                       <option key={time} value={time}>
                         {time}
                       </option>
@@ -184,9 +187,10 @@ export default function FilterThrough() {
                           <div className='col'>{`Brand: ${perfume.brand}`}</div>
                           <div className='col'>{`Scent: ${perfume.scent}`}</div>
                           <div className='col'>{`Mood: ${perfume.mood}`}</div>
-                          <div className='col'>{`Season: ${perfume.season}`}</div>
+                          <div className='col'>{`season: ${perfume.season}`}</div>
                           <div className='col'>{`Day/Night: ${perfume.time_of_day}`} </div>
                           <div className='col'>{`Style: ${perfume.style}`}</div>
+                          <div className='col'>{`Gender: ${perfume.gender}`}</div>
                         </div>
                       </div>
                       <div className='col-2'></div>

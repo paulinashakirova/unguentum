@@ -13,7 +13,6 @@ export default function MainMenu() {
   return (
     <Router>
       <div>
-        <h1 className='text-center display-4'>What is the best fragrance for you today?</h1>
         {/* <AddNewPerfume /> */}
 
         {/* <input type='text' value={message} onChange={handleChange} /> */}

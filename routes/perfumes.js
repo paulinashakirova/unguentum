@@ -4,50 +4,50 @@ const db = require('../model/helper');
 
 const filterPerfumes = (queryParams) => {
   let where = '';
-  //check seasonS front end
+
   if ('season' in queryParams) {
     where += `season = '${queryParams.season}'`;
   }
-  console.log(where);
+  // console.log(where);
   if ('mood' in queryParams) {
     if (where) {
       where += ` AND `;
     }
     where += `mood = '${queryParams.mood}'`;
   }
-  console.log(where);
+  // console.log(where);
   if ('time_of_day' in queryParams) {
     if (where) {
       where += ` AND `;
     }
     where += `time_of_day = '${queryParams.time_of_day}'`;
   }
-  console.log(where);
+  // console.log(where);
   if ('scent' in queryParams) {
     if (where) {
       where += ` AND `;
     }
     where += `scent = '${queryParams.scent}'`;
   }
-  console.log(where);
+  // console.log(where);
   if ('style' in queryParams) {
     if (where) {
       where += ` AND `;
     }
     where += `style = '${queryParams.style}'`;
   }
-  console.log(where);
+  // console.log(where);
   if ('gender' in queryParams) {
     if (where) {
       where += ` AND `;
     }
     where += `gender = '${queryParams.gender}'`;
   }
-  console.log(where);
+  // console.log(where);
   if (where) {
     where = `WHERE ` + where;
   }
-  console.log(where);
+  // console.log(where);
   return where;
 };
 // && 'mood' in queryParams

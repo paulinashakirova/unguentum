@@ -51,6 +51,7 @@ export default function FilterThrough() {
       <form autoComplete='off' onSubmit={handleSubmit}>
         <div className='container'>
           <div className='mb-3'>
+            <h1 className='display-1 text-center'>What is the best fragrance for you today?</h1>
             <label className='form-label content-align-center'>
               <p className='lead text-center'>Find what you want</p>
             </label>

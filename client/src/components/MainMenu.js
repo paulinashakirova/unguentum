@@ -1,22 +1,11 @@
-import { BrowserRouter as Router, Switch, Route, Link, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
 import React from 'react';
 import FilterThrough from './FilterThrough';
 import DisplayAllPerfumes from './DisplayAllPerfumes';
-// import './App.css';
 
-// import DisplayAllPerfumes from './DisplayAllPerfumes';
-// import AddNewPerfume from './AddNewPerfume';
 export default function MainMenu() {
-  // const handleChange = (event) => {
-  //   setMessage(event.target.value);
-  // };
   return (
     <Router>
-      <div>
-        {/* <AddNewPerfume /> */}
-
-        {/* <input type='text' value={message} onChange={handleChange} /> */}
-      </div>
       <nav>
         <div className='container'>
           <div className='row justify-content-between'>
@@ -41,7 +30,6 @@ export default function MainMenu() {
           <FilterThrough />
         </Route>
       </Switch>
-      {/* <DisplayAllPerfumes /> */}
     </Router>
     //
   );

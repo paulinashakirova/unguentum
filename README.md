@@ -73,7 +73,7 @@ Use React, Node/Express, and MySQL.
 - [ ] Finish populating `tasks` from the API call in `useEffect`.
 
 - [ ] Then, add a list of perfumes to the DOM. Each perfume should have the following:
-  - The main accord, mood, season, day/night, style, hame, brand, gender columns.
+  - The main scent, mood, season, day/night, style, hame, brand, gender columns.
   - filter drop down lists.
   - Two buttons:
     - One button to filter through all filters :)
